@@ -1,0 +1,22 @@
+﻿*{
+    padding:0;
+    margin:0;
+}
+.menu-head{
+    display:flex;
+    margin-left:100px;
+    margin-right:100px;
+}
+.menu {
+    display:flex;
+    border-right: solid 0.5px rgb(128, 128, 128, 0.30);
+    width: 217px;
+}
+.menu-list li {
+    list-style: none;
+    margin-top: 15px;
+}
+.menu ul li a {
+    color:black;
+    text-decoration:none;
+}
