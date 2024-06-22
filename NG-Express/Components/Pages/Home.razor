@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 <PageTitle>NG-Express | Electronics, Fashion, Collectibles & More</PageTitle>
+<div class="parent">
 
 <div class="menu-head">
     <div class="menu">
@@ -41,5 +42,18 @@
     </div>
     <div class="slider">
         <NG_Express.Components.Slider.Slider></NG_Express.Components.Slider.Slider>
+    </div>
+</div>
+<div class="main">
+    <div class="sub">
+        <NG_Express.Components.Components_card.Title_Component.Title_Component Title="Today's"></NG_Express.Components.Components_card.Title_Component.Title_Component>
+        <span class="sub-name">Flash Sales</span>
+    <div style="display:flex;">
+        @for(int i = 0; i < 5 ; ++i)
+        {
+            <NG_Express.Components.Components_card.Product_Component.Product_Component></NG_Express.Components.Components_card.Product_Component.Product_Component>
+        }
+    </div>
+    </div>
     </div>
 </div>

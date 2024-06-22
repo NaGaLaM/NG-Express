@@ -1,0 +1,13 @@
+﻿.title-name {
+    font-family: Title/16PX Semibold ;
+    font-size: 17px;
+    font-weight: 600;
+    margin-left: 14px;
+    color: rgba(219, 68, 68, 1);
+}
+.title{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100px;
+}

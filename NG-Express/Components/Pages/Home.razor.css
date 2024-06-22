@@ -4,8 +4,11 @@
 }
 .menu-head{
     display:flex;
-    margin-left:100px;
-    margin-right:100px;
+    justify-content:center;
+    width:100%;
+}
+.parent{
+    width:100%;
 }
 .menu {
     display:flex;
@@ -24,5 +27,20 @@
     text-decoration:none;
 }
 .slider {
-    margin:35px 0 0 10%;
+    width:1072px;
+    min-width:00px;
+    margin:35px 0 0 45px;
+}
+.main{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+.sub{
+    margin-top:120px;
+    width:1440px;
+}
+.sub-name{
+    margin-top:24px;
+    font-size: 48px;
 }
