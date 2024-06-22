@@ -47,12 +47,15 @@
 <div class="main">
     <div class="sub">
         <NG_Express.Components.Components_card.Title_Component.Title_Component Title="Today's"></NG_Express.Components.Components_card.Title_Component.Title_Component>
-        <span class="sub-name">Flash Sales</span>
-    <div style="display:flex;">
+    <span class="sub-name">Flash Sales</span>
+    <div style="display:flex;margin-top:40px;">
         @for(int i = 0; i < 5 ; ++i)
         {
             <NG_Express.Components.Components_card.Product_Component.Product_Component></NG_Express.Components.Components_card.Product_Component.Product_Component>
         }
+    </div>
+    <div style="display:flex; width:100%;justify-content:center;margin-top:60px;">
+    <button class="view-btn">View All Products</button>
     </div>
     </div>
     </div>
