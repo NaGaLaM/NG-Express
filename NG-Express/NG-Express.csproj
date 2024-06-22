@@ -8,4 +8,24 @@
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\img\1.png" />
+    <Content Remove="wwwroot\img\2.png" />
+    <Content Remove="wwwroot\img\3.png" />
+    <Content Remove="wwwroot\img\4.png" />
+    <Content Remove="wwwroot\img\5.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\2.png" />
+    <None Include="wwwroot\img\3.png" />
+    <None Include="wwwroot\img\5.png" />
+    <None Include="wwwroot\img\4.png" />
+    <None Include="wwwroot\img\1.png" />
+  </ItemGroup>
+
 </Project>
