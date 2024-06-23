@@ -8,8 +8,7 @@
     width:100%;
 }
 .parent{
-    width:100%;
-    margin-bottom:60px;
+    width:1440px;
 }
 .menu {
     display:flex;
@@ -29,17 +28,21 @@
 }
 .slider {
     width:1072px;
-    min-width:00px;
     margin:35px 0 0 45px;
 }
 .main{
     width:100%;
-    display:flex;
     justify-content:center;
 }
-.sub{
-    margin-top:120px;
-    width:1440px;
+.sub {
+    margin-top: 120px;
+}
+.sub1{
+    margin-top:80px;
+}
+.sub, sub1 {
+    width: 1440px;
+    border-bottom: solid 0.5px rgb(128, 128, 128, 0.30);
 }
 .sub-name{
     margin-top:24px;
@@ -50,6 +53,7 @@
     border-radius: 4px;
     border: none;
     color: rgba(250, 250, 250, 1);
-    width:234px;
-    height:56px;
+    margin-bottom: 60px;
+    width: 234px;
+    height: 56px;
 }
