@@ -6,13 +6,14 @@
     background:none;
 }
 .boder {
-    width:270px;
-    height:250px;
+    position:relative;
+    min-width:270px;
+    min-height:250px;
     background-color: rgba(245, 245, 245, 1);
     border-radius:4px;
 }
 .discount {
-    position:relative;
+    position:absolute;
     z-index:2;
     margin-top:12px;
     margin-left:12px;
@@ -42,6 +43,11 @@
     height:76px;
 }
 .buttons button{
+    
+    transition:1s;
     background:none;
     border:none;
+}
+.buttons button:hover{
+    background-color:darkgrey;
 }
