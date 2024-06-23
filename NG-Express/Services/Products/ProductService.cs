@@ -20,5 +20,10 @@ namespace NG_Express.Services.Products
             return products;
 
         }
+        public async Task<Product> GetProductByIdAsync(int Id)
+        {
+            var product = await DB.Products.FirstOrDefaultAsync(a=>a.Id == Id);
+            return product;
+        }
     }
 }
