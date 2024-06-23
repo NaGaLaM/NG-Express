@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using Microsoft.EntityFrameworkCore
+@using global::Services.Categories
+@inject ICategoryService CategoryService
+@inject IProductService ProductService
 
 <PageTitle>NG-Express | Electronics, Fashion, Collectibles & More</PageTitle>
 <div class="parent">
@@ -6,38 +10,22 @@
 <div class="menu-head">
     <div class="menu">
         <ul class="menu-list">
-            <li>
-                <a href="#">
-                    Woman's Fashion
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.95 11.636L8 6.68597L9.414 5.27197L15.778 11.636L9.414 18L8 16.586L12.95 11.636Z" fill="black" />
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a href="#">Men's Fashion</a>
-            </li>
-            <li>
-                <a href="#">Electronics</a>
-            </li>
-            <li>
-                <a href="#">Home & Lifestyle</a>
-            </li>
-            <li>
-                <a href="#">Medicine</a>
-            </li>
-            <li>
-                <a href="#">Sports & Outdoor</a>
-            </li>
-            <li>
-                <a href="#">Baby's & toys</a>
-            </li>
-            <li>
-                <a href="#">Groceries & Pets</a>
-            </li>
-            <li>
-                <a href="#">Health & Beauty</a>
-            </li>
+            @if(Categories != null)
+            {
+                    
+           @foreach(var category in Categories)
+            {
+               <li>
+                   <a href="#">
+                       @category.Name
+                   </a>
+               </li>
+                    }
+                }
+                else
+                {
+                <span>Loading...</span>
+                }
         </ul>
     </div>
     <div class="slider">
@@ -49,11 +37,24 @@
         <NG_Express.Components.Components_card.Title_Component.Title_Component Title="Today's"></NG_Express.Components.Components_card.Title_Component.Title_Component>
     <span class="sub-name">Flash Sales</span>
     <div style="display:flex;margin-top:40px;">
-        @for(int i = 0; i < 5 ; ++i)
+        @if(Products!=null)
         {
-            <NG_Express.Components.Components_card.Product_Component.Product_Component Discount=4m-i></NG_Express.Components.Components_card.Product_Component.Product_Component>
-        }
-    </div>
+
+                @foreach (var product in Products)
+                {
+                    if(counter == 5)
+                    {
+                        break;
+                    }
+                    counter++;
+                    <NG_Express.Components.Components_card.Product_Component.Product_Component Product="@product"></NG_Express.Components.Components_card.Product_Component.Product_Component>
+                    }
+                }
+                else
+                {
+                    <span>loading...</span>
+                }
+            </div>
     <div style="display:flex; width:100%;justify-content:center;margin-top:60px;">
     <button class="view-btn">View All Products</button>
     </div>
@@ -64,3 +65,21 @@
      </div>
     </div>
 </div>
+
+@code {
+    List<Category> Categories;
+    List<Product> Products;
+    public int counter { get; set; } = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Categories = await CategoryService.GetCategories();
+            Products = await ProductService.GetAllProductsAsync();
+        }
+        catch(Exception err)
+        {
+            Console.WriteLine($"{err.Message} Error in db connection and request");
+        }
+    }
+}
