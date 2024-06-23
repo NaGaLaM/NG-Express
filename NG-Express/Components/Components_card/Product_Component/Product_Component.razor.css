@@ -1,7 +1,7 @@
 ﻿.card{
     margin-right:20px;
-    width:270px;
-    height:350px;
+    min-width:270px;
+    min-height:350px;
     border:none;
     background:none;
 }
@@ -41,17 +41,22 @@
 .buttons{
     position:absolute;
     top:12px;
-    right:14px;
+    right:10px;
     width:34px;
     height:76px;
     z-index:3;
 }
 .buttons button{
-    
-    transition:1s;
-    background:none;
+    width:34px;
+    height:34px;
+    transition:0.5s;
+    background-color:white;
+    border-radius:100%;
     border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 .buttons button:hover{
-    background-color:darkgrey;
+    background-color:rgba(233,233,233,0.7);
 }
