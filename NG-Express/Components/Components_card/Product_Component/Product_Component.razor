@@ -15,7 +15,7 @@
             </button>
         </div>
 
-    <a href="#" class="boder">
+    <a href="/product/@Product.Id" target="_top" class="boder">
         <img src="@Product.Image" alt="Alternate Text" />
     </a>
     <button class="card-button">
@@ -42,7 +42,7 @@
         else
         {
         <span style="color:rgba(219, 68, 68, 1);font-weight:600;">
-                $@(Product.Price)
+                $@((Product.Price).ToString("0.00"))
         </span>
         }
     </p>

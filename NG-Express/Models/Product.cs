@@ -12,7 +12,7 @@ namespace NG_Express.Models
         public string Image { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; set; } 
         public DateTime? Updated { get; set; }
         public DateTime? Deleted { get; set; }
         public Category Category { get; set; }

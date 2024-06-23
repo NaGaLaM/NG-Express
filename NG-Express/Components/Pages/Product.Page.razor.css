@@ -1,0 +1,36 @@
+﻿.main {
+    display: flex;
+    margin-top: 130px;
+    width:1440px;
+    justify-content:center;
+}
+.imgs{
+    position:relative;
+    left:0;
+    width:170px;
+}
+.imgs img{
+    flex-wrap:wrap;
+    margin-top:20px;
+    position:relative;
+    width: 170px;
+    height: 139px;
+    border-radius: 4px;
+    overflow: hidden;
+    object-fit: cover;
+    top: 10%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.set{
+    margin-left:30px;
+    margin-top:20px;
+    width:auto;
+    height:620px;
+}
+.info{
+    width:400px;
+    margin-left:120px;
+
+}
