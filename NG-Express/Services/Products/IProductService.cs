@@ -6,6 +6,8 @@ namespace NG_Express.Services.Products
     {
         
         Task<List<Product>> GetAllProductsAsync();
+        Task<List<Product>> GetDiscountedProductsAsync();
         Task<Product> GetProductByIdAsync(int Id);
+        Task<List<Product>> GetProductsByCategoryId(int Id);
     }
 }

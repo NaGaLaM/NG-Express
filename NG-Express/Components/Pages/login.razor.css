@@ -1,0 +1,25 @@
+﻿.main {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    margin-bottom: 140px;
+    width: 100%;
+}
+
+.form {
+    margin-left: 130px;
+    align-content: center;
+}
+
+.form button {
+
+}
+
+.input {
+    display:block;
+    border: none;
+    border-bottom: solid 0.5px rgb(128, 128, 128, 0.30);
+    width: 370px;
+    height: 45px;
+    margin-top: 30px;
+}

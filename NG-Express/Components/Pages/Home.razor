@@ -15,7 +15,12 @@
                     
            @foreach(var category in Categories)
             {
-               <li>
+                if(limit >= 9)
+                {
+                    break;  
+                }
+                        limit++;
+                <li>
                    <a href="#">
                        @category.Name
                    </a>
@@ -33,44 +38,7 @@
     </div>
 </div>
 <div class="main">
-    <div class="sub">
-        <NG_Express.Components.Components_card.Title_Component.Title_Component Title="Today's"></NG_Express.Components.Components_card.Title_Component.Title_Component>
-    <span class="sub-name">Flash Sales</span>
-    <div class="btns-np">
-        <button id="btn-prev" onclick="prev()">
-                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 1L1 8L8 15M1 8H17" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-        </button>
-                <button id="btn-next" onclick="next()">
-                    <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.5 8H18M18 8L11 1M18 8L11 15" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-        </button>
-    </div>
-    <div class="card-box" id="card-box">
-        @if(Products!=null)
-        {
-
-                @foreach (var product in Products)
-                {
-                    if(counter == 15)
-                    {
-                        break;
-                    }
-                    counter++;
-                    <NG_Express.Components.Components_card.Product_Component.Product_Component Product="@product"></NG_Express.Components.Components_card.Product_Component.Product_Component>
-                    }
-                }
-                else
-                {
-                    <span>loading...</span>
-                }
-            </div>
-    <div style="display:flex; width:100%;justify-content:center;margin-top:60px;">
-    <button style="margin-bottom:60px;" class="view-btn">View All Products</button>
-    </div>
-    </div>
+    <NG_Express.Components.Components_card.Products_Slider_Component.Products_Slider_Component counter="15" Products="@Products" Title="Today's"></NG_Express.Components.Components_card.Products_Slider_Component.Products_Slider_Component>
    <div class="sub1">
             <NG_Express.Components.Components_card.Title_Component.Title_Component Title="Categories"></NG_Express.Components.Components_card.Title_Component.Title_Component>
             <span class="sub-name">Browse By Categories</span>
@@ -81,13 +49,14 @@
 @code {
     List<Category> Categories;
     List<Product> Products;
+    public int limit = 0;
     public int counter { get; set; } = 0;
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Categories = await CategoryService.GetCategories();
-            Products = await ProductService.GetAllProductsAsync();
+            Products = await ProductService.GetDiscountedProductsAsync();
         }
         catch(Exception err)
         {

@@ -30,7 +30,7 @@
         @if(Product.Discount>0)
         {
         <span style="color:rgba(219, 68, 68, 1); font-weight:600">
-                $@((Product.Price - Product.Discount).ToString("0.00"))
+                $@((Product.Price - Product.Discount)?.ToString("0.00"))
         </span>
         <span style="color:rgba(140, 140, 140,1);text-decoration-line:line-through;font-weight:600;margin-left:15px;">
            $@Product.Price
