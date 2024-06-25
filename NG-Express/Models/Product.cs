@@ -8,7 +8,7 @@ namespace NG_Express.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
-        public float Discount { get; set; }
+        public float? Discount { get; set; }
         public string Image { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
