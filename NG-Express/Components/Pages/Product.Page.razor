@@ -1,20 +1,19 @@
 ﻿@page "/product/{Id:int}"
 @inject IProductService ProductService
 <div>
-
-@if(Product != null)
+@if(Product != null && Images != null)
 {
-    <div class="main">
-    <div class="imgs">
-    <img src="@Product.Image"/>
-    <img src="@Product.Image"/>
-    <img src="@Product.Image"/>
-    <img src="@Product.Image"/>
+        <div class="main">
+            <div class="imgs">
+   @foreach (var img in Images)
+    {
+        <img src="@img.Image" onclick='zoom("@img.Image")' class="imgchildbox"/>
+    }
+
     </div>
-    <img class="set" src="@Product.Image"/>
+    <img class="set" id="mainboxforimg" src="@Images.FirstOrDefault(b=>b.isMain).Image" style="border:solid 0.5px black;"/>
     <div class="info">
         <div style="border-bottom:solid 0.5px rgb(128, 128, 128, 0.30);">
-
         <h2 style="font-weight:600;">@Product.Name</h2>
             <svg width="290" height="21" viewBox="0 0 290 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M16.673 10.1717C17.7437 9.36184 17.1709 7.65517 15.8284 7.65517H13.3992C12.7853 7.65517 12.243 7.25521 12.0617 6.66868L11.3375 4.32637C10.9309 3.01106 9.0691 3.01106 8.66246 4.32637L7.93832 6.66868C7.75699 7.25521 7.21469 7.65517 6.60078 7.65517H4.12961C2.79142 7.65517 2.21592 9.35274 3.27822 10.1665L5.39469 11.7879C5.85885 12.1435 6.05314 12.7501 5.88196 13.3092L5.11296 15.8207C4.71416 17.1232 6.22167 18.1704 7.30301 17.342L9.14861 15.9281C9.65097 15.5432 10.349 15.5432 10.8514 15.9281L12.6807 17.3295C13.7636 18.159 15.2725 17.1079 14.8696 15.8046L14.09 13.2827C13.9159 12.7198 14.113 12.1081 14.5829 11.7526L16.673 10.1717Z" fill="#FFAD33" />
@@ -46,8 +45,8 @@
     {
         
     <div class="prod">
-        <NG_Express.Components.Components_card.Products_Slider_Component.Products_Slider_Component Title="Related Items" Products="Products" counter="Products.Count" SubTitle="@Product.Category.Name"></NG_Express.Components.Components_card.Products_Slider_Component.Products_Slider_Component>
-        </div>
+        <NG_Express.Components.Components_card.Products_Slider_Component.Products_Slider_Component Title="Related Items" Products="Products" counter="Products.Count" SubTitle="" isButton="false"></NG_Express.Components.Components_card.Products_Slider_Component.Products_Slider_Component>
+    </div>
     }
     else
     {
@@ -59,7 +58,7 @@
 else
 {
     <h1>loading</h1>
-};
+}
 
 </div>
 
@@ -68,12 +67,22 @@ else
     public int Id { get; set; }
     Product Product = new Product();
     List<Product> Products;
+    List<ProductImage> Images;
     private bool isLoading = true;
+    public bool isButton = false;
     protected override async Task OnParametersSetAsync()
     {
+        try
+        {
+            Product = await ProductService.GetProductByIdAsync(Id);
+            Products = await ProductService.GetProductsByCategoryId(Product.CategoryId);
+            Images = Product?.ProductImages;
+            isLoading = false;
 
-        Product = await ProductService.GetProductByIdAsync(Id);
-        Products = await ProductService.GetProductsByCategoryId(Product.CategoryId);
-        isLoading = false;
+        }
+        catch(Exception err)
+        {
+            Console.WriteLine(err.Message);
+        }
     }
 }

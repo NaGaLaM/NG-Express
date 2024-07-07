@@ -15,7 +15,6 @@ namespace NG_Express.Services.Products
             List<Product> products;
             products = await DB.Products
                                 .Include(p=>p.Category)
-                                .OrderBy(p => EF.Functions.Random())
                                 .ToListAsync(); 
             return products;
 
@@ -24,25 +23,27 @@ namespace NG_Express.Services.Products
         {
             List<Product> products ;
                 products = await DB.Products
+                                    .Include(p=>p.ProductImages)
                                     .Include(p=>p.Category)
                                     .Where(p=>p.CategoryId==Id)
-                                    .OrderBy (p => EF.Functions.Random())
                                     .ToListAsync();
             return products;
 
         }
         public async Task<Product> GetProductByIdAsync(int Id)
         {
-            var product = await DB.Products.FirstOrDefaultAsync(a=>a.Id == Id);
+            var product = await DB.Products
+                                .Include(p=>p.ProductImages)
+                                .FirstOrDefaultAsync(a=>a.Id == Id);
             return product;
         }
         public async Task<List<Product>> GetDiscountedProductsAsync()
         {
             List<Product> products;
             products = await DB.Products
+                        .Include(p=>p.ProductImages)
                         .Include(p => p.Category)
-                        .Where(p => p.Discount != null)
-                        .OrderBy(p => EF.Functions.Random())
+                        .Where(p => p.Discount != null && p.Discount != 0)
                         .ToListAsync();
             return products;
         }
