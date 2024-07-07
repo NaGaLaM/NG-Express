@@ -14,15 +14,19 @@
 
             </button>
         </div>
-
+    @if(Product != null && Product.ProductImages != null)
+    {
     <a href="/product/@Product.Id" target="_top" class="boder">
-        <img src="@Product.Image" alt="Alternate Text" />
+
+        <img src="@Product.ProductImages.FirstOrDefault(a=>a.isMain).Image" alt="Alternate Text" />
     </a>
+    }
+
     <button class="card-button">
         Add To Cart
     </button>
         <span>
-    <a href="#" style="display:inline-block; color:black;text-decoration:none;margin-top:16px;font-weight:600;font-size:16px;">
+        <a href="/product/@Product.Id" style="display:inline-block; color:black;text-decoration:none;margin-top:16px;font-weight:600;font-size:16px;">
         @Product.Name
     </a>
     </span>

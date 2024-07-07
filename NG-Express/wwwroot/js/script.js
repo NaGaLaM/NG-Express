@@ -33,3 +33,7 @@ function prev(count) {
         cardBox.style.marginLeft = `${marginleft}px`
     }
 }
+
+function zoom(src) {
+ document.getElementById("mainboxforimg").src = src;
+}

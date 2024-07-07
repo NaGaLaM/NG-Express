@@ -1,14 +1,14 @@
 ﻿.card{
     margin-right:20px;
-    min-width:270px;
+    width:270px;
     min-height:350px;
     border:none;
     background:none;
 }
 .boder {
     position: relative;
-    min-width: 270px;
-    min-height: 250px;
+    width: 270px;
+    height: 250px;
     background-color: rgba(245, 245, 245, 1);
     border-radius: 4px;
     overflow: hidden;
