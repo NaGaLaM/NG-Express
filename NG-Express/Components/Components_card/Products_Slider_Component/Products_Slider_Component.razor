@@ -18,6 +18,7 @@
         {
             @foreach (var product in Products)
             {
+                if (Id == product.Id) continue;
                 if (counter <= 0)
                 {
                     break;
@@ -25,7 +26,6 @@
                 --counter;
                 <NG_Express.Components.Components_card.Product_Component.Product_Component Product="@product"></NG_Express.Components.Components_card.Product_Component.Product_Component>
             }
-            Console.WriteLine(isButton);
         }
         else
         {
@@ -51,4 +51,6 @@
     public string SubTitle { get; set; } = "Flash Sale";
     [Parameter]
     public bool isButton { get; set; } = true;
+    [Parameter]
+    public int Id { get; set; } = -1;
 }

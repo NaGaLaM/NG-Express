@@ -57,7 +57,6 @@
         {
             Categories = await CategoryService.GetCategories();
             Products = await ProductService.GetDiscountedProductsAsync();
-            Console.WriteLine($"{Products.Count} ddddddddddddddddd");
         }
         catch(Exception err)
         {
