@@ -1,6 +1,7 @@
 using Data;
 using Microsoft.EntityFrameworkCore;
 using NG_Express.Components;
+using NG_Express.Services.Buyers;
 using NG_Express.Services.Products;
 using Services.Categories;
 var builder = WebApplication.CreateBuilder(args);
@@ -15,9 +16,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnection"));
 });
 
+
+// Interfaces and Services 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IBuyerService, BuyerService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
