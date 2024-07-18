@@ -1,6 +1,9 @@
 ﻿@page "/login"
-@rendermode InteractiveServer
+@inject NavigationManager Navigator
 @inject IBuyerService BuyerService
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+
 <div class="main">
     <div>
         <img src="https://ir.ebaystatic.com/cr/v/c01/buyer_dweb_individual.jpg" width="781" height="805" />
@@ -11,21 +14,34 @@
         <div>
           <input type="email" placeholder="Email or Phone Number" class="input" @bind=Username />
           <input type="password" placeholder="Password" class="input" @bind=Password/>
-            <button class="view-btn" style="width:143px;margin-top:40px;" @onclick="login">Log In</button>
+          <p>
+              @Message
+          </p>
+            <button class="view-btn" style="width:143px;margin-top:40px;" type="button" onclick="@login">Log In</button>
             <span style="color:red; margin-left:100px;">Forget Password?</span>
         </div>
     </div>
 </div>
 
+
 @code {
     private string Username { get; set; }
     private string Password { get; set; }
+    private string Message { get; set; }
     LoginResponse Response = new LoginResponse();
     async void login()
     {
         Response = await BuyerService.Login(Username, Password);
-        Console.WriteLine(Response.Message);
-        Console.WriteLine(Response.Status);
+        Message = Response.Message;
+        if(Response.Status>=400)
+        {
+            Password = string.Empty;
+        }
+        else
+        {   
+        Navigator.NavigateTo("/");
+        await JS.InvokeVoidAsync("reload");
+        }
     }
 
 }

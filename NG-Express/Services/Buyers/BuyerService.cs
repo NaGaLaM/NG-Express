@@ -1,22 +1,29 @@
 ﻿using NG_Express.Responses;
 using NG_Express.Models;
+using NG_Express.Security;
 using Data;
 using Microsoft.EntityFrameworkCore;
-
+using Blazored.LocalStorage;
 namespace NG_Express.Services.Buyers
 {
     public class BuyerService : IBuyerService
     {
-        private readonly AppDbContext DB;
-        public BuyerService(AppDbContext db)
+        private readonly AppDbContext _db;
+        private readonly AuthToken _authToken;
+        private readonly ILocalStorageService _localStorageService;
+        private readonly AuthStateProvider _stateProvider;
+        public BuyerService(AppDbContext db,AuthToken authToken,ILocalStorageService localStorageService,AuthStateProvider authStateProvider)
         {
-            DB = db;
+            _db = db;
+            _authToken = authToken;
+            _localStorageService = localStorageService;
+            _stateProvider = authStateProvider;
         }
         public async Task<LoginResponse> Login(string Username, string Password)
         {
             try
             {
-                var user = await DB.Buyers
+                var user = await _db.Buyers
                                     .FirstOrDefaultAsync(b => b.Username == Username);
                 if (user == null) return new LoginResponse
                 {
@@ -30,6 +37,9 @@ namespace NG_Express.Services.Buyers
                     Status = (int)System.Net.HttpStatusCode.NotFound,
                     Message = "Password is Incorrect"
                 };
+                var token = _authToken.GenerateToken(user);
+                await _localStorageService.SetItemAsync("auth", token);
+                _stateProvider.MarkUserAsAuthenticated(token);
                 return new LoginResponse
                 {
                     buyer = user,
@@ -54,7 +64,7 @@ namespace NG_Express.Services.Buyers
         {
             try
             {
-                var unique = await DB.Buyers
+                var unique = await _db.Buyers
                                 .FirstOrDefaultAsync(a => a.Username == buyers.Username);
                 if (unique != null)
                 {
@@ -65,8 +75,8 @@ namespace NG_Express.Services.Buyers
                         Message = "User in this username is created"
                     };
                 }
-                DB.Buyers.Add(buyers);
-                await DB.SaveChangesAsync();
+                _db.Buyers.Add(buyers);
+                await _db.SaveChangesAsync();
                 return new RegisterResponse
                 {
                     buyer = buyers,
