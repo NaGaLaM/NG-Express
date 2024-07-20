@@ -15,9 +15,9 @@
 
 <body>
     <script src="./js/functions.js"></script>
-    <Routes />
     <script src="_framework/blazor.web.js"></script>
     <script src="./js/script.js"></script>
+    <Routes @rendermode=@(new InteractiveServerRenderMode(prerender:false))/>
 </body>
 
 </html>
