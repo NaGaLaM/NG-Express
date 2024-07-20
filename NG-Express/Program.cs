@@ -8,7 +8,7 @@ using NG_Express.Components;
 using NG_Express.Security;
 using NG_Express.Services.Buyers;
 using NG_Express.Services.Products;
-using Services.Categories;
+using NG_Express.Services.Categories;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,6 @@ builder.Services.AddBlazoredLocalStorage();
 
 // Model interfaces and services 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBuyerService, BuyerService>();
 

@@ -1,7 +1,7 @@
 ﻿using Data;
 using Microsoft.EntityFrameworkCore;
 using NG_Express.Models;
-namespace Services.Categories
+namespace NG_Express.Services.Categories
 {
     public class CategoryService : ICategoryService
     {
