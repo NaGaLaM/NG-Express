@@ -34,7 +34,7 @@ namespace NG_Express.Security
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddSeconds(10),
+                expires: DateTime.UtcNow.AddDays(30),
                 signingCredentials: signingCredentials
                 );
 
@@ -56,7 +56,7 @@ namespace NG_Express.Security
                     ValidIssuer = _issuer,
                     ValidAudience = _audience,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ClockSkew = TimeSpan.FromSeconds(10)
+                    ClockSkew = TimeSpan.FromDays(30)
                 };
 
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
@@ -64,7 +64,6 @@ namespace NG_Express.Security
             }
             catch 
             {
-                Console.WriteLine($"Token Isnt Valid.");
                 return null;
             }
         }
