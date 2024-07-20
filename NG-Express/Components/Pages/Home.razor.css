@@ -4,16 +4,16 @@
 }
 .menu-head{
     display:flex;
-    justify-content:center;
+    justify-content:space-evenly;
     width:100%;
 }
 .parent{
-    width:1440px;
+    
 }
 .menu {
     display:flex;
     border-right: solid 0.5px rgb(128, 128, 128, 0.30);
-    width: 317px;
+    width: 300px;
 }
 .menu-list {
     margin-top:24px;
@@ -27,8 +27,7 @@
     text-decoration:none;
 }
 .slider {
-    width:70%;
-    margin:35px 0 0 45px;
+    margin-top:35px;
 }
 .main{
     width:100%;

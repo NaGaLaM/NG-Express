@@ -1,9 +1,15 @@
+using Blazored.LocalStorage;
 using Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NG_Express.Components;
+using NG_Express.Security;
 using NG_Express.Services.Buyers;
 using NG_Express.Services.Products;
-using Services.Categories;
+using NG_Express.Services.Categories;
+using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,12 +22,41 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("LocalConnection"));
 });
 
+builder.Services.AddBlazoredLocalStorage();
 
-// Interfaces and Services 
+// Model interfaces and services 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBuyerService, BuyerService>();
+
+// authorization and authentication services
+builder.Services.AddScoped<AuthToken>();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+builder.Services.AddScoped<AuthStateProvider>();
+builder.Services.AddCascadingAuthenticationState();
+
+
+
+// JWT Configs 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "Issuer",
+        ValidAudience = "Audience",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
+    };
+});
+
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -39,5 +74,6 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();

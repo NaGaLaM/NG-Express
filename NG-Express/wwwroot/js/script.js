@@ -37,3 +37,4 @@ function prev(count) {
 function zoom(src) {
  document.getElementById("mainboxforimg").src = src;
 }
+

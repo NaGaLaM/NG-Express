@@ -1,18 +1,17 @@
 ﻿.main{
     display:flex;
     align-items:center;
-    justify-content:space-evenly;
     height:94px;
     width:100%;
     border-bottom:solid 0.5px rgb(128, 128, 128, 0.30);
 }
 .menu{
-    justify-content:space-between;
+    position:relative;
+    justify-content:space-evenly;
     align-items:center;
     display:flex;
-    width:1440px;
-    min-width:1200px;
-
+    width:100%;
+    min-width:853px;
 }
 .h-menu{
     display:flex;
@@ -35,7 +34,7 @@
 .btns-box {
     display:flex;
     position: relative;
-    width: 347px;
+    width: max-content;
     height: 38px;
 }
 .search {
@@ -60,4 +59,34 @@
 }
 .btns{
     margin-left:24px;
+}
+button.profile {
+    position:relative;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(219, 68, 68, 1);
+    border-radius:100%;
+}
+.icn{
+    position:absolute;
+    width:32px;
+    height:32px;
+    background-image: url(/img/acc.png);
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+.prof-menu {
+    position:relative;
+}
+.profile-menu {
+    position:absolute;
+    list-style:none;
+    width: 150px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius:4px;
+    left:-100px;
 }
