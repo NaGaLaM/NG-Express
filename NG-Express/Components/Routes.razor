@@ -1,6 +1,22 @@
-﻿<Router AppAssembly="typeof(Program).Assembly">
+﻿<CascadingAuthenticationState>
+<Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <AuthorizeRouteView RouteData="routeData" Context="user" DefaultLayout="@typeof(Layout.MainLayout)">
+            <Authorizing>
+                <span>We Are Authorizing the user</span>
+            </Authorizing>
+            <NotAuthorized>
+                <p>Please Login</p>
+            </NotAuthorized>
+        </AuthorizeRouteView>
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
+    <NotFound>
+        <PageTitle>NotFound</PageTitle>
+        <LayoutView Layout="@typeof(Layout.MainLayout)">
+            <p>404 Not Found</p>
+        </LayoutView>
+    </NotFound>
 </Router>
+</CascadingAuthenticationState>
+

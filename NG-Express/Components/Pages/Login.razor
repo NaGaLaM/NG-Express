@@ -1,7 +1,7 @@
 ﻿@page "/login"
 @inject NavigationManager Navigator
 @inject IBuyerService BuyerService
-@inject IJSRuntime JS
+@attribute [Authorize("NotAuthorized")]
 
 <div class="main">
     <div>
@@ -16,7 +16,7 @@
           <p>
               @Message
           </p>
-            <button class="view-btn" style="width:143px;margin-top:40px;" type="button" onclick="@login">Log In</button>
+            <button class="view-btn" style="width:143px;margin-top:40px;" type="button" @onclick="login">Log In</button>
             <span style="color:red; margin-left:100px;">Forget Password?</span>
         </div>
     </div>
@@ -38,8 +38,7 @@
         }
         else
         {   
-        Navigator.NavigateTo("/");
-        await JS.InvokeVoidAsync("reload");
+        Navigator.NavigateTo("/",forceLoad:true);
         }
     }
 

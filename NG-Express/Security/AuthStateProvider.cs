@@ -4,31 +4,29 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.JSInterop;
 using System.Security.Claims;
 using System.Text.Json;
-
+using NG_Express.Security;
 namespace NG_Express.Security
 {
     public class AuthStateProvider : AuthenticationStateProvider
     {
         private readonly ILocalStorageService _localStorageService;
         private readonly IJSRuntime _jsruntime;
-        public AuthStateProvider(ILocalStorageService localStorageService,IJSRuntime jSRuntime)
+        private readonly AuthToken _authToken;
+        public AuthStateProvider(ILocalStorageService localStorageService,IJSRuntime jSRuntime, AuthToken authToken)
         {
             _localStorageService = localStorageService;
             _jsruntime = jSRuntime;
+            _authToken = authToken;
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await _localStorageService.GetItemAsync<string>("auth");
-            Console.WriteLine(token);
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token)) return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            ClaimsPrincipal? user = _authToken.ValidateToken(token);
+            if (user == null)
             {
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
-
-            var claims = ParseClaimsFromJwt(token);
-            var identity = new ClaimsIdentity(claims,"jwt");
-            var user = new ClaimsPrincipal(identity);
-            var data = new AuthenticationState(user);
             return new AuthenticationState(user);
         }
 

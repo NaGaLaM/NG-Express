@@ -34,12 +34,17 @@ builder.Services.AddScoped<AuthToken>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 builder.Services.AddScoped<AuthStateProvider>();
 builder.Services.AddCascadingAuthenticationState();
-
-
+builder.Services.AddAuthorizationCore(options =>
+{
+    options.AddPolicy("NotAuthorized", policy =>
+        policy.RequireAssertion(context =>
+            !context.User.Identity.IsAuthenticated));
+});
 
 // JWT Configs 
 builder.Services.AddAuthentication(options =>
 {
+    
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })

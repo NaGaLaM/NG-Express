@@ -2,7 +2,7 @@
 @using Microsoft.EntityFrameworkCore
 @inject ICategoryService CategoryService
 @inject IProductService ProductService
-
+@rendermode InteractiveServer
 <PageTitle>NG-Express | Electronics, Fashion, Collectibles & More</PageTitle>
 <div class="parent">
 
@@ -10,26 +10,16 @@
     <div class="menu">
         <ul class="menu-list">
             @if(Categories != null)
-            {
-                    
+            {    
            @foreach(var category in Categories)
             {
-                if(limit >= 9)
-                {
-                    break;  
-                }
-                        limit++;
                 <li>
                    <a href="#">
                        @category.Name
                    </a>
                </li>
-                    }
-                }
-                else
-                {
-                <span>Loading...</span>
-                }
+             }
+             }
         </ul>
     </div>
     <div class="slider">
