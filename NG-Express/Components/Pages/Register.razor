@@ -1,5 +1,7 @@
 ﻿@page "/register"
 @inject IBuyerService BuyerService
+@inject NavigationManager Navigator
+@attribute [Authorize(Policy = "anonym")]
 @rendermode InteractiveServer
 <div class="main">
     <div>
@@ -9,6 +11,12 @@
         <h2>Create an account</h2>
         <span>Enter your details below</span>
         <div style="margin-top:40px;">
+            <div class="or-btn">
+            <input id="toggle-on" class="toggle toggle-left" name="toggle" value="Buyer" type="radio" @onchange="OnRoleChange" checked>
+            <label for="toggle-on" class="btn">Buyer</label>
+            <input id="toggle-off" class="toggle toggle-right" name="toggle" value="Seller" type="radio" @onchange="OnRoleChange">
+            <label for="toggle-off" class="btn">Seller</label>
+            </div>
             <p><input type="text" placeholder="First Name" class="input" @bind=Buyer.FirstName /></p>
             <p><input type="text" placeholder="Last Name" class="input" @bind=Buyer.LastName /></p>
             <p><input type="text" placeholder="UserName" class="input" @bind=Buyer.Username /></p>
@@ -40,10 +48,26 @@
 
 @code {
     Buyer Buyer = new Buyer();
+    Seller Seller = new Seller();
+    private string Role { get; set; } = "Buyer";
     RegisterResponse Response = new RegisterResponse();
+
+    public void OnRoleChange(ChangeEventArgs ev)
+    {
+        Role = ev.Value.ToString();
+        Console.WriteLine(Role);
+    }
     public async void Registration()
     {
-        Response = await BuyerService.Register(Buyer);
-        Console.WriteLine(Response.Message);
+        if (Role == "Buyer")
+        {
+            Response = await BuyerService.Register(Buyer);
+            Navigator.NavigateTo("/login", forceLoad: true);
+
+        }
+        if(Role == "Seller")
+        {
+           // Response = await SellerService.Register(Seller);
+        }
     }
 }

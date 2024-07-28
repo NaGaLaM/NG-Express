@@ -20,7 +20,7 @@ namespace NG_Express.Security
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var token = await _localStorageService.GetItemAsync<string>("auth");
+			var token = await _localStorageService.GetItemAsync<string>("auth");
             if (string.IsNullOrEmpty(token)) return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             ClaimsPrincipal? user = _authToken.ValidateToken(token);
             if (user == null)

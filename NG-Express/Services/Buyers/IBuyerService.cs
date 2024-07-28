@@ -7,5 +7,6 @@ namespace NG_Express.Services.Buyers
     {
         Task<LoginResponse> Login(string Username, string Password);
         Task<RegisterResponse> Register(Buyer buyers);
+        Task<Buyer> GetBuyerByIdAsync(int Id);
     }
 }

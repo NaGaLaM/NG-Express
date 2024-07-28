@@ -19,6 +19,12 @@ namespace NG_Express.Services.Buyers
             _localStorageService = localStorageService;
             _stateProvider = authStateProvider;
         }
+
+        public async Task<Buyer> GetBuyerByIdAsync(int Id)
+        {
+            var Buyer = _db.Buyers.FirstOrDefault(x => x.Id == Id);
+            return Buyer;
+        }
         public async Task<LoginResponse> Login(string Username, string Password)
         {
             try

@@ -1,8 +1,7 @@
 ﻿@page "/login"
 @inject NavigationManager Navigator
 @inject IBuyerService BuyerService
-@attribute [Authorize("NotAuthorized")]
-
+@attribute [Authorize(Policy = "anonym")]
 <div class="main">
     <div>
         <img src="https://ir.ebaystatic.com/cr/v/c01/buyer_dweb_individual.jpg" width="781" height="805" />
@@ -21,6 +20,7 @@
         </div>
     </div>
 </div>
+
 
 
 @code {

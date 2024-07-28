@@ -1,13 +1,12 @@
-﻿@inject NavigationManager Navigator
-<CascadingAuthenticationState>
+﻿<CascadingAuthenticationState>
 <Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
-        <AuthorizeRouteView RouteData="routeData" Context="user" DefaultLayout="@typeof(Layout.MainLayout)">
+        <AuthorizeRouteView RouteData="routeData" DefaultLayout="@typeof(Layout.MainLayout)">
             <Authorizing>
-                <span>We Are Authorizing the user</span>
+                <Loader/>
             </Authorizing>
             <NotAuthorized>
-                <p>Please Login</p>
+                <AuthErrors/>
             </NotAuthorized>
         </AuthorizeRouteView>
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
