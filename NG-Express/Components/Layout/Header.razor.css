@@ -1,42 +1,52 @@
-﻿.main{
-    display:flex;
-    align-items:center;
-    height:94px;
-    width:100%;
-    border-bottom:solid 0.5px rgb(128, 128, 128, 0.30);
-}
-.menu{
-    position:relative;
-    justify-content:space-evenly;
-    align-items:center;
-    display:flex;
-    width:100%;
-    min-width:853px;
-}
-.h-menu{
-    display:flex;
-}
-.menu-box .h-menu {
-    height:auto;
-    list-style:none;
-}
-.menu-box li {
-    height:10px;
-    margin-left:48px;
-}
-.menu-box li a{
-    text-decoration:none;
-    color:black;
-    font-size:16px;
-    font-weight:400;
+﻿.main {
+    display: flex;
+    align-items: center;
+    height: 94px;
+    width: 100%;
+    border-bottom: solid 0.5px rgb(128, 128, 128, 0.30);
 }
 
-.btns-box {
-    display:flex;
+.menu {
     position: relative;
+    justify-content: space-evenly;
+    align-items: center;
+    display: flex;
+    width: 100%;
+    z-index: 1;
+}
+
+
+.menu-box .h-menu {
+    padding:0;
+    display: flex;
+    align-content:center;
+    justify-content: space-evenly;
+    height: auto;
+    width:100%;
+    list-style: none;
+}
+.menu-box{
+    width:30%;
+}
+
+.menu-box li {
+    height: 10px;
+}
+
+    .menu-box li a {
+        text-decoration: none;
+        color: black;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+.btns-box {
+    position: relative;
+    display: flex;
     width: max-content;
     height: 38px;
 }
+
 .search {
     position: relative;
     width: 260px;
@@ -45,48 +55,123 @@
     border: none;
     padding: 10px 40px 10px 20px
 }
+
 .srch-icn {
     position: absolute;
-    top:6px;
-    left:220px;
+    top: 6px;
     width: 24px;
-    height: 24px; 
-    pointer-events: none; 
+    height: 24px;
+    pointer-events: none;
+    left: 220px;
 }
-.btns button{
-    background:none;
-    border:none;
+
+.btns button {
+    position: relative;
+    margin-right: 40px;
+    background: none;
+    border: none;
 }
-.btns{
-    margin-left:24px;
+
+    .btns button svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+.btns {
+    margin-left: 24px;
 }
+
 button.profile {
-    position:relative;
+    position: relative;
+    width: max-content;
+    height: max-content;
+}
+
+.profile:hover::after ~ .profile-menu {
+    display: flex;
+}
+
+.profile svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.icn {
+    position: absolute;
     width: 32px;
     height: 32px;
-    background-color: rgba(219, 68, 68, 1);
-    border-radius:100%;
-}
-.icn{
-    position:absolute;
-    width:32px;
-    height:32px;
     background-image: url(/img/acc.png);
-    background-repeat:no-repeat;
-    background-position:center;
-    background-size:cover;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
 }
+
 .prof-menu {
-    position:relative;
+    position: relative;
+    width: 5px;
+    height: 5px;
 }
+
+    .prof-menu:hover .profile-menu,
+    .prof-menu .profile-menu:hover {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition:0.3s ease;
+    }
+
 .profile-menu {
-    position:absolute;
-    list-style:none;
-    width: 150px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius:4px;
-    left:-100px;
+    position: absolute;
+    white-space: nowrap;
+    list-style: none;
+    width: contain;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    color: aliceblue;
+    top: 40px;
+    z-index: 2;
+    right: -10px;
+    box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(100px);
+    transform: translateY(-10px);
+    visibility: hidden;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+    .profile-menu ul {
+        padding: 18px 20px 0 20px;
+        position: relative;
+    }
+
+        .profile-menu ul li {
+            margin-bottom: 8px;
+        }
+
+            .profile-menu ul li:hover {
+                opacity: 0.75;
+            }
+
+            .profile-menu ul li a {
+                align-content: center;
+                text-decoration: none;
+                color: aliceblue;
+            }
+
+@media(max-width: 870px) {
+    .searcher {
+        display: none;
+    }
+    .menu{
+        justify-content:space-between;
+    }
+
 }

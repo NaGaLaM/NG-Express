@@ -9,7 +9,11 @@ using NG_Express.Security;
 using NG_Express.Services.Buyers;
 using NG_Express.Services.Products;
 using NG_Express.Services.Categories;
+using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using NG_Express.Middleware;
+using Microsoft.AspNetCore.Components.Endpoints;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,12 +38,16 @@ builder.Services.AddScoped<AuthToken>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 builder.Services.AddScoped<AuthStateProvider>();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
+
+
 builder.Services.AddAuthorizationCore(options =>
 {
-    options.AddPolicy("NotAuthorized", policy =>
-        policy.RequireAssertion(context =>
-            !context.User.Identity.IsAuthenticated));
+    options.AddPolicy("anonym", policy =>
+    policy.RequireAssertion(context =>
+    !context.User.Identity.IsAuthenticated));
 });
+
 
 // JWT Configs 
 builder.Services.AddAuthentication(options =>
@@ -58,7 +66,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = "Issuer",
         ValidAudience = "Audience",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"])),
+        RoleClaimType = ClaimTypes.Role
     };
 });
 

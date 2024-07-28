@@ -2,7 +2,9 @@
 @using Microsoft.EntityFrameworkCore
 @inject ICategoryService CategoryService
 @inject IProductService ProductService
+
 @rendermode InteractiveServer
+
 <PageTitle>NG-Express | Electronics, Fashion, Collectibles & More</PageTitle>
 <div class="parent">
 
@@ -36,6 +38,7 @@
 </div>
 
 @code {
+
     List<Category> Categories;
     List<Product> Products;
     public int limit = 0;

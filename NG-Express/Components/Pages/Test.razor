@@ -1,43 +1,12 @@
 ﻿@page "/secured-page"
-@using Microsoft.AspNetCore.Components.Authorization
-@inject IJSRuntime JSRuntime
-@inject AuthenticationStateProvider AuthStateProvider
+@attribute [Authorize(Roles = "Buyer")]
 
 <h3>Secured Page</h3>
 
-<CascadingAuthenticationState>
-    <AuthorizeView>
-        <Authorized>
-            <p>Authenticated user: @username</p>
-            <button>Logout</button>
-        </Authorized>
-        <NotAuthorized>
-            <p>You are not authorized to view this page.</p>
-        </NotAuthorized>
-    </AuthorizeView>
-</CascadingAuthenticationState>
 
 @code {
-    private string username;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
 
-            if (user.Identity.IsAuthenticated)
-            {
-                // Call JavaScript interop after initial render
-                var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "auth");
-                Console.WriteLine(token); // Example of using the token
-
-                username = user.Identity.Name; // Assuming you have set the name in claims
-                StateHasChanged(); // Refresh UI to reflect changes
-            }
-        }
-    }
 
 
 }

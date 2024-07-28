@@ -8,7 +8,6 @@ namespace NG_Express.Security
 {
     public class AuthToken
     {
-        private readonly IConfiguration _configuration;
         private readonly string _issuer;
         private readonly string _audience;
         private readonly string SecretKey;
@@ -19,7 +18,7 @@ namespace NG_Express.Security
             SecretKey = config.GetValue<string>("JWT:SecretKey") ?? string.Empty;
 
         }
-        public string GenerateToken(Buyer buyer)
+        public string GenerateToken<T>(T buyer)
         {
             var Key = Encoding.UTF8.GetBytes(SecretKey);
             var symmetricSecurirtKey = new SymmetricSecurityKey(Key);
@@ -27,8 +26,9 @@ namespace NG_Express.Security
 
             var claims = new[]
             {
-                new Claim("UserId",buyer.Id.ToString()),
-                new Claim("Name",buyer.FirstName),
+                new Claim("UserId",(buyer as dynamic).Id.ToString()),
+                new Claim("Name",(buyer as dynamic).FirstName),
+                new Claim(ClaimTypes.Role,"Buyer")
             };
             var tokenSchema = new JwtSecurityToken(
                 issuer: _issuer,
@@ -56,10 +56,13 @@ namespace NG_Express.Security
                     ValidIssuer = _issuer,
                     ValidAudience = _audience,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ClockSkew = TimeSpan.FromDays(30)
+                    ClockSkew = TimeSpan.FromDays(30),
+                    RoleClaimType = ClaimTypes.Role
                 };
 
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+                var type = principal.FindFirst(c => c.Type == ClaimTypes.Role);
+                Console.WriteLine(type.Value);
                 return principal;
             }
             catch 

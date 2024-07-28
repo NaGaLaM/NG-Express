@@ -1,0 +1,58 @@
+﻿@page "/MyProfile"
+@inject IBuyerService BuyerService
+@using System.Security.Claims
+@attribute [Authorize(Roles = "Buyer")]
+<div class="main-box">
+       <MyAccountAside/>
+    <div class="editor">
+        <h3 style="color: rgba(219, 68, 68, 1);">
+            Edit Your Profile
+        </h3>
+        <div class="inputs">
+            <label>
+             <p style="font-size:16px;">First Name</p>
+            <input type="text"  @bind=Buyer.FirstName />
+            </label>  
+            <label>
+             <p style="font-size:16px;">Last Name</p>
+            <input type="text" @bind=Buyer.LastName/>
+            </label>
+            <label>
+             <p style="font-size:16px;">Email</p>
+            <input type="email" @bind=Buyer.Email/>
+            </label>
+            <label>
+             <p style="font-size:16px;">Address</p>
+            <input type="text" @bind=Buyer.Address/>
+            </label>
+            <div class="pwd-box">
+                <p>Password Changes</p>
+                <input type="text" placeholder="Current Password" />
+                <input type="text" placeholder="New Password"/>
+                <input type="text" placeholder="Confirm New Password"/>
+                <div class="btn-box">
+                    <button style="border:none;background:none;">Cancel</button>
+                    <button class="save-btn">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [CascadingParameter] private Task<AuthenticationState> AuthStates { get; set; }
+    private AuthenticationState User;
+    private Buyer Buyer;
+    protected override async Task OnInitializedAsync()
+    {
+        User = await AuthStates;
+        IEnumerable<Claim> claims = User.User.Claims;
+        string Id = claims.FirstOrDefault(e => e.Type == "UserId")?.Value;
+        string Role = claims.FirstOrDefault(r => r.Type == ClaimTypes.Role)?.Value;
+        if(Role == "Buyer")
+        {
+            Buyer = await BuyerService.GetBuyerByIdAsync(int.Parse(Id));
+        }
+    }
+}
