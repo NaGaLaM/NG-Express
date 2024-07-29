@@ -86,3 +86,21 @@ input[type="radio"].toggle:checked + label {
     display:flex;
     justify-content:center;
 }
+.inp{
+    display:flex;
+    flex-direction:column;
+    transition:cubic-bezier(1s);
+}
+.cy-box{
+    margin-top:10px;
+    position:relative;
+}
+.cy-label {
+    position:absolute;
+    top:20px;
+    left:10px;
+    color:gray;
+}
+.form-control{
+    height:45px;
+}

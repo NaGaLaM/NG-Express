@@ -5,8 +5,8 @@ namespace NG_Express.Services.Buyers
 {
     public interface IBuyerService
     {
-        Task<LoginResponse> Login(string Username, string Password);
-        Task<RegisterResponse> Register(Buyer buyers);
+        Task<BuyerLoginResponse> LoginAsync(string Username, string Password);
+        Task<BuyerRegisterResponse> Register(Buyer buyers);
         Task<Buyer> GetBuyerByIdAsync(int Id);
     }
 }

@@ -16,10 +16,13 @@ namespace NG_Express.Models
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
+        [ForeignKey("Seller")]
+        public int SellerId { get; set; }
         public DateTime? Created { get; set; } 
         public DateTime? Updated { get; set; }
         public DateTime? Deleted { get; set; }
         public Category Category { get; set; }
         public List<ProductImage> ProductImages { get; set; }
+        public Seller Seller { get; set; }
     }
 }
