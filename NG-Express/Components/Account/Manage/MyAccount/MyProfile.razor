@@ -11,7 +11,7 @@
         <div class="inputs">
             <label>
              <p style="font-size:16px;">First Name</p>
-            <input type="text"  @bind=Buyer.FirstName />
+            <input type="text"  @bind=Buyer.Name />
             </label>  
             <label>
              <p style="font-size:16px;">Last Name</p>
@@ -49,10 +49,7 @@
         User = await AuthStates;
         IEnumerable<Claim> claims = User.User.Claims;
         string Id = claims.FirstOrDefault(e => e.Type == "UserId")?.Value;
-        string Role = claims.FirstOrDefault(r => r.Type == ClaimTypes.Role)?.Value;
-        if(Role == "Buyer")
-        {
-            Buyer = await BuyerService.GetBuyerByIdAsync(int.Parse(Id));
-        }
+        Buyer = await BuyerService.GetBuyerByIdAsync(int.Parse(Id));
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿@page "/login"
 @inject NavigationManager Navigator
+@inject ISellerService SellerService
 @inject IBuyerService BuyerService
 @attribute [Authorize(Policy = "anonym")]
 <div class="main">
@@ -27,14 +28,25 @@
     private string Username { get; set; }
     private string Password { get; set; }
     private string Message { get; set; }
-    LoginResponse Response = new LoginResponse();
+    BuyerLoginResponse BuyerResponse = new BuyerLoginResponse();
+    SellerLoginResponse SellerResponse = new SellerLoginResponse();
     async void login()
     {
-        Response = await BuyerService.Login(Username, Password);
-        Message = Response.Message;
-        if(Response.Status>=400)
+        BuyerResponse = await BuyerService.LoginAsync(Username, Password);
+        Message = BuyerResponse.Message;
+        if(BuyerResponse.Status>=400)
         {
-            Password = string.Empty;
+            Console.WriteLine(Username);
+            SellerResponse = await SellerService.LoginAsync(Username, Password);
+            Message = SellerResponse.Message;   
+            if(SellerResponse.Status>=400)
+            {   
+                Password = string.Empty;
+            }
+            else
+            {
+                Navigator.NavigateTo("/myprofile", forceLoad: true);
+            }
         }
         else
         {   

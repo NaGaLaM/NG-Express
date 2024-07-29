@@ -14,6 +14,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using NG_Express.Middleware;
 using Microsoft.AspNetCore.Components.Endpoints;
+using NG_Express.Services.Sellers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -32,6 +33,7 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBuyerService, BuyerService>();
+builder.Services.AddScoped<ISellerService,SellerService>();
 
 // authorization and authentication services
 builder.Services.AddScoped<AuthToken>();

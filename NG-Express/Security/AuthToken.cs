@@ -18,7 +18,7 @@ namespace NG_Express.Security
             SecretKey = config.GetValue<string>("JWT:SecretKey") ?? string.Empty;
 
         }
-        public string GenerateToken<T>(T buyer)
+        public string GenerateToken<T>(T buyer,string Role)
         {
             var Key = Encoding.UTF8.GetBytes(SecretKey);
             var symmetricSecurirtKey = new SymmetricSecurityKey(Key);
@@ -27,8 +27,8 @@ namespace NG_Express.Security
             var claims = new[]
             {
                 new Claim("UserId",(buyer as dynamic).Id.ToString()),
-                new Claim("Name",(buyer as dynamic).FirstName),
-                new Claim(ClaimTypes.Role,"Buyer")
+                new Claim("Name",(buyer as dynamic).Name),
+                new Claim(ClaimTypes.Role,Role)
             };
             var tokenSchema = new JwtSecurityToken(
                 issuer: _issuer,

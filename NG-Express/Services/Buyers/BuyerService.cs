@@ -19,34 +19,33 @@ namespace NG_Express.Services.Buyers
             _localStorageService = localStorageService;
             _stateProvider = authStateProvider;
         }
-
         public async Task<Buyer> GetBuyerByIdAsync(int Id)
         {
             var Buyer = _db.Buyers.FirstOrDefault(x => x.Id == Id);
             return Buyer;
         }
-        public async Task<LoginResponse> Login(string Username, string Password)
+        public async Task<BuyerLoginResponse> LoginAsync(string Username, string Password)
         {
             try
             {
                 var user = await _db.Buyers
                                     .FirstOrDefaultAsync(b => b.Username == Username);
-                if (user == null) return new LoginResponse
+                if (user == null) return new BuyerLoginResponse
                 {
                     buyer = new Buyer(),
                     Status = (int)System.Net.HttpStatusCode.NotFound,
                     Message = "Username is Incorrect"
                 };
-                if (user.PasswordHash != Password) return new LoginResponse
+                if (user.PasswordHash != Password) return new BuyerLoginResponse
                 {
                     buyer = new Buyer(),
                     Status = (int)System.Net.HttpStatusCode.NotFound,
                     Message = "Password is Incorrect"
                 };
-                var token = _authToken.GenerateToken(user);
+                var token = _authToken.GenerateToken(user,"Buyer");
                 await _localStorageService.SetItemAsync("auth", token);
                 _stateProvider.MarkUserAsAuthenticated(token);
-                return new LoginResponse
+                return new BuyerLoginResponse
                 {
                     buyer = user,
                     Status = (int)System.Net.HttpStatusCode.Accepted,
@@ -56,7 +55,7 @@ namespace NG_Express.Services.Buyers
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return new LoginResponse
+                return new BuyerLoginResponse
                 {
                     buyer = new Buyer(),
                     Status = (int)System.Net.HttpStatusCode.BadGateway,
@@ -66,7 +65,7 @@ namespace NG_Express.Services.Buyers
 
         }
 
-        public async Task<RegisterResponse> Register(Buyer buyers)
+        public async Task<BuyerRegisterResponse> Register(Buyer buyers)
         {
             try
             {
@@ -74,7 +73,7 @@ namespace NG_Express.Services.Buyers
                                 .FirstOrDefaultAsync(a => a.Username == buyers.Username);
                 if (unique != null)
                 {
-                    return new RegisterResponse
+                    return new BuyerRegisterResponse
                     {
                         buyer = new Buyer(),
                         Status = (int)System.Net.HttpStatusCode.BadRequest,
@@ -83,7 +82,7 @@ namespace NG_Express.Services.Buyers
                 }
                 _db.Buyers.Add(buyers);
                 await _db.SaveChangesAsync();
-                return new RegisterResponse
+                return new BuyerRegisterResponse
                 {
                     buyer = buyers,
                     Status = (int)System.Net.HttpStatusCode.Created,
@@ -93,7 +92,7 @@ namespace NG_Express.Services.Buyers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return new RegisterResponse
+                return new BuyerRegisterResponse
                 {
                     buyer = new Buyer(),
                     Status = (int)System.Net.HttpStatusCode.BadRequest,
